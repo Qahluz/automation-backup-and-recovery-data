@@ -1,0 +1,5 @@
+$ bash /home/afaf/automation-backup-and-recovery-data/scripts/backup.sh /home/afaf/automation-backup-and-recovery-data/tests/demo/source /home/afaf/automation-backup-and-recovery-data/output/demo-backup
+[2026-11-20 12:55:56] [PID:32430] [INFO] Lock berhasil diperoleh. Memulai rangkaian backup.
+Error: Direktori tujuan tidak dapat ditulis.
+[2026-11-20 12:55:56] [PID:32430] [ERROR] Backup dihentikan karena validasi gagal (exit status: 6).
+Exit status: 6

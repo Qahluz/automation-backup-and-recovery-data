@@ -1,0 +1,8 @@
+$ bash /home/afaf/automation-backup-and-recovery-data/scripts/verify.sh verify /home/afaf/automation-backup-and-recovery-data/output/demo-backup/backup_20261120_125427_32323.tar.gz
+Memverifikasi integritas arsip: /home/afaf/automation-backup-and-recovery-data/output/demo-backup/backup_20261120_125427_32323.tar.gz
+Checksum Acuan  : 6d4716093a6f959f6a2d7b044ec83919d8d55f7a21d00c54ed3c7ae95558a830
+Checksum Aktual : 6d4716093a6f959f6a2d7b044ec83919d8d55f7a21d00c54ed3c7ae95558a830
+==========================================
+VERIFIKASI BERHASIL! Checksum cocok.
+==========================================
+Exit status: 0

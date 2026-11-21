@@ -1,0 +1,98 @@
+BUKTI PENGUJIAN ANGGOTA 1
+VALIDASI SUMBER DAN PARAMETER
+
+Nama       : Muhamad Afwan Imam Nasuha
+NIM        : 2510512195
+Modul      : scripts/validation.sh
+Pengujian  : T01–T03
+Lingkungan : Ubuntu Server VM kelompok
+
+1. TUJUAN PENGUJIAN
+
+Pengujian dilakukan untuk memastikan modul validation.sh mampu memeriksa parameter, keberadaan direktori sumber, jenis direktori sumber, dan kelayakan direktori tujuan sebelum proses backup dijalankan.
+
+2. HASIL PENGUJIAN UTAMA PADA UBUNTU SERVER
+
+T01 – Validasi sumber dan tujuan valid
+
+Kondisi:
+Direktori sumber tersedia dan direktori tujuan dapat digunakan.
+
+Hasil aktual:
+Validasi berhasil.
+Exit status: 0
+Status: LULUS
+
+T02 – Direktori sumber tidak ditemukan
+
+Kondisi:
+Direktori sumber yang diberikan tidak tersedia.
+
+Hasil aktual:
+Error: Direktori sumber tidak ditemukan.
+Exit status: 3
+Status: LULUS
+
+T02 Tambahan – Sumber bukan direktori
+
+Kondisi:
+Parameter sumber menunjuk ke berkas biasa, bukan direktori.
+
+Hasil aktual:
+Error: Sumber bukan direktori.
+Exit status: 3
+Status: LULUS
+
+T03 – Parameter kurang
+
+Kondisi:
+Script dijalankan tanpa memberikan parameter sumber dan tujuan.
+
+Hasil aktual:
+Error: Parameter harus terdiri dari sumber dan tujuan.
+Exit status: 2
+Status: LULUS
+
+3. PENGUJIAN TAMBAHAN LOKAL
+
+Pengujian tambahan V01–V06 dilaksanakan menggunakan CachyOS dan akun non-root validationtester.
+
+Pengujian tambahan mencakup:
+- Parameter kosong.
+- Sumber bukan direktori.
+- Direktori tujuan tidak ditemukan.
+- Validasi direktori menggunakan akun non-root.
+- Sumber tanpa izin baca dan penelusuran.
+- Direktori tujuan tanpa izin tulis.
+
+Hasil dan penjelasan rinci pengujian tambahan tersedia pada:
+tests/anggota1-uji-validasi.md
+
+Bukti screenshot pengujian lokal tersedia pada:
+evidence/01-validation/
+
+4. LOKASI BUKTI PENGUJIAN RESMI
+
+Bukti pengujian langsung pada VM Ubuntu Server kelompok disimpan pada:
+
+evidence/07-ubuntu-server-demo/01-validation/
+
+Berkas bukti:
+- T01-validasi-berhasil.png
+- T02-sumber-tidak-ditemukan.png
+- T02b-sumber-bukan-direktori.png
+- T03-parameter-kurang.png
+
+Bukti terminal:
+- T01-valid.txt
+- T02-sumber-tidak-ada.txt
+- T02-sumber-bukan-direktori.txt
+- T03-parameter-kurang.txt
+
+5. KESIMPULAN
+
+Modul validation.sh berhasil menjalankan pemeriksaan sumber, tujuan, dan parameter sesuai skenario pengujian.
+
+Seluruh pengujian utama T01–T03 pada VM Ubuntu Server kelompok memperoleh hasil sesuai dengan yang diharapkan.
+
+Pengujian tambahan V01–V06 melengkapi pemeriksaan terhadap kondisi parameter dan hak akses menggunakan akun non-root.

@@ -1,0 +1,3 @@
+$ bash -c $'\nif [ ! -d "$RESTORE_BAD" ]; then\n    echo "GAGAL: Direktori tujuan tidak ditemukan."\n    exit 1\nfi\n\nITEM="$(find "$RESTORE_BAD" -mindepth 1 -print -quit)"\n\nif [ -z "$ITEM" ]; then\n    echo "LULUS: Direktori tujuan benar-benar kosong."\nelse\n    echo "GAGAL: Masih terdapat data:"\n    find "$RESTORE_BAD" -mindepth 1 -print\n    exit 1\nfi\n'
+LULUS: Direktori tujuan benar-benar kosong.
+Exit status: 0

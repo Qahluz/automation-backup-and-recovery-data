@@ -1,0 +1,5 @@
+$ sudo -u agung tar -tzf /var/tmp/uji-akses-t17-t18.16SJ1R/arsip/backup_20261120_141716_33618.tar.gz
+data/
+data/b.txt
+data/a.txt
+Exit status: 0

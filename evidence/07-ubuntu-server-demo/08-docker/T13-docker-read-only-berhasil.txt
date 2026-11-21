@@ -1,0 +1,17 @@
+$ bash -c $'\nset -e\n\nREPORT="$PROJECT/output/laporan.txt"\nBEFORE="$(sha256sum "$REPORT")"\n\necho "=== CHECKSUM SEBELUM ==="\necho "$BEFORE"\n\necho "=== LAPORAN DARI CONTAINER ==="\nsudo docker run --rm \\\n  --mount "type=bind,src=$PROJECT/output,dst=/data,readonly" \\\n  alpine:3.21 cat /data/laporan.txt\n\nAFTER="$(sha256sum "$REPORT")"\n\necho "=== CHECKSUM SESUDAH ==="\necho "$AFTER"\n\nif [ "$BEFORE" = "$AFTER" ]; then\n    echo "LULUS: Laporan tidak berubah."\nelse\n    echo "GAGAL: Checksum laporan berubah."\n    exit 1\nfi\n'
+=== CHECKSUM SEBELUM ===
+fd419d2f4116f05401ce149d1955e03484122011b2ac1ba0f50d39835e3d3b04  /home/afaf/automation-backup-and-recovery-data/output/laporan.txt
+=== LAPORAN DARI CONTAINER ===
+==========================================
+LAPORAN OTOMASI BACKUP & VERIFIKASI (5A)
+==========================================
+Nama Arsip       : /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051801_5717.tar.gz
+Waktu Eksekusi   : 2026-11-19 05:18:05
+Checksum SHA-256 : 4c927d7cc37dc0b1149c772c1ae2f72241aafa5d9e5a676dedb4c97c0b855b78
+Hasil Verifikasi : LOLOS (Arsip Valid & Terverifikasi)
+Status Proses    : BERHASIL (PID: 5717)
+==========================================
+=== CHECKSUM SESUDAH ===
+fd419d2f4116f05401ce149d1955e03484122011b2ac1ba0f50d39835e3d3b04  /home/afaf/automation-backup-and-recovery-data/output/laporan.txt
+LULUS: Laporan tidak berubah.
+Exit status: 0

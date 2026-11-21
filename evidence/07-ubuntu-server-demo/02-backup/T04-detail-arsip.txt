@@ -1,0 +1,14 @@
+$ bash -c $'\n    ls -lh "$DEST"\n    echo "=== PERMISSION ==="\n    stat -c "%a %n" "$ARCHIVE" "$ARCHIVE.sha256"\n    echo "=== ISI ARSIP ==="\n    tar -tzf "$ARCHIVE"\n  '
+total 8.0K
+-rw------- 1 afaf afaf 288 Nov 19 04:40 backup_20261119_044037_4778.tar.gz
+-rw------- 1 afaf afaf 101 Nov 19 04:40 backup_20261119_044037_4778.tar.gz.sha256
+=== PERMISSION ===
+600 /home/afaf/automation-backup-and-recovery-data/output/demo-backup/backup_20261119_044037_4778.tar.gz
+600 /home/afaf/automation-backup-and-recovery-data/output/demo-backup/backup_20261119_044037_4778.tar.gz.sha256
+=== ISI ARSIP ===
+source/
+source/subfolder/
+source/subfolder/dokumen-tambahan.txt
+source/dokumen.txt
+source/dokumen-demo.txt
+Exit status: 0

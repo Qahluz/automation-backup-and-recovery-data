@@ -1,0 +1,17 @@
+$ bash /home/afaf/automation-backup-and-recovery-data/scripts/restore.sh /home/afaf/automation-backup-and-recovery-data/output/demo-backup/backup_20261120_125427_32323.tar.gz /home/afaf/automation-backup-and-recovery-data/tests/demo/restore-evidence-valid-20261120_130128
+[1/4] Memverifikasi checksum arsip...
+Memverifikasi integritas arsip: /home/afaf/automation-backup-and-recovery-data/output/demo-backup/backup_20261120_125427_32323.tar.gz
+Checksum Acuan  : 6d4716093a6f959f6a2d7b044ec83919d8d55f7a21d00c54ed3c7ae95558a830
+Checksum Aktual : 6d4716093a6f959f6a2d7b044ec83919d8d55f7a21d00c54ed3c7ae95558a830
+==========================================
+VERIFIKASI BERHASIL! Checksum cocok.
+==========================================
+[2/4] Memeriksa struktur arsip...
+[3/4] Mengekstrak arsip ke area sementara...
+[4/4] Menyelesaikan pemulihan data...
+==========================================
+PEMULIHAN BERHASIL!
+Arsip     : /home/afaf/automation-backup-and-recovery-data/output/demo-backup/backup_20261120_125427_32323.tar.gz
+Direktori : /home/afaf/automation-backup-and-recovery-data/tests/demo/restore-evidence-valid-20261120_130128
+==========================================
+Exit status: 0

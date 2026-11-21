@@ -1,11 +1,15 @@
+
 # Pengujian Anggota 6 - Monitoring CPU, Memori, dan Proses
+
+Penanggung jawab: Muhammad Rafif Husein Salam (2510512202).
 
 ## 1. Prasyarat
 
-- Sistem Linux dengan Bash, `ps`, `awk`, dan direktori `/proc`.
-- Script dijalankan dari salinan proyek yang sedang diuji.
-- Pengujian T15 menggunakan direktori data dummy dan tujuan sementara.
-- Pengujian T16 menggunakan PID numerik yang dipastikan tidak ada.
+- Sistem operasi Linux dengan Bash, `ps`, `awk`, dan direktori `/proc`.
+- Script dijalankan dari repository yang sedang diuji.
+- T15 menggunakan direktori data dummy dan tujuan sementara pada direktori HOME.
+- T16 menggunakan PID numerik yang dipastikan tidak aktif.
+- Ruang penyimpanan mencukupi untuk pembuatan data uji T15.
 
 ## 2. T15 - Monitoring ketika proses backup berjalan
 
@@ -15,100 +19,154 @@ Memastikan PID proses backup, penggunaan CPU, dan penggunaan memori dapat diamat
 
 ### Langkah pengujian
 
-1. Buat direktori sumber dan tujuan sementara.
-2. Siapkan data dummy yang cukup besar agar proses backup tidak selesai sebelum pengamatan dilakukan.
-3. Jalankan backup di latar belakang dan simpan PID prosesnya.
-4. Jalankan monitoring berulang pada PID tersebut.
-5. Tunggu proses backup selesai.
-6. Periksa baris log untuk PID yang sama.
+Pengujian dilakukan menggunakan dua terminal agar proses backup dapat diamati ketika masih berjalan.
 
-Contoh perintah dari akar proyek:
+Terminal 1: siapkan data pengujian dan jalankan backup.
 
 ```bash
-TEST_DIR="$(mktemp -d)"
-mkdir -p "$TEST_DIR/sumber" "$TEST_DIR/tujuan"
-dd if=/dev/urandom of="$TEST_DIR/sumber/data-dummy.bin" bs=1M count=64 status=progress
+cd ~/automation-backup-and-recovery-data
 
-bash scripts/backup.sh "$TEST_DIR/sumber" "$TEST_DIR/tujuan" &
+source tests/demo/demo-env.sh
+
+T15_DIR="$(mktemp -d "$HOME/rafif-t15.XXXXXX")"
+
+mkdir -p "$T15_DIR/sumber" "$T15_DIR/tujuan"
+
+dd if=/dev/urandom \
+  of="$T15_DIR/sumber/data-dummy.bin" \
+  bs=1M count=512 status=progress
+```
+
+Jalankan backup di latar belakang dengan jeda 10 detik agar monitoring dapat dimulai sebelum proses backup berjalan.
+
+```bash
+bash -c 'sleep 10; exec bash "$1" "$2" "$3"' _ \
+  "$PROJECT/scripts/backup.sh" \
+  "$T15_DIR/sumber" "$T15_DIR/tujuan" \
+  > "$T15_DIR/backup-output.txt" 2>&1 &
+
 BACKUP_PID=$!
-printf 'PID backup: %s\n' "$BACKUP_PID"
 
-bash scripts/monitoring.sh --watch-pid "$BACKUP_PID"
-wait "$BACKUP_PID"
+printf '%s\n' "$T15_DIR" > "$HOME/.rafif-t15-current"
+printf '%s\n' "$BACKUP_PID" > "$HOME/.rafif-t15-pid"
+
+echo "PID backup: $BACKUP_PID"
 ```
 
-Periksa pencatatan PID:
+Terminal 2: jalankan monitoring terhadap PID backup yang sedang berjalan.
 
 ```bash
-grep -F "PID=$BACKUP_PID" logs/monitoring.log
+cd ~/automation-backup-and-recovery-data
+
+source tests/demo/demo-env.sh
+
+T15_DIR="$(cat "$HOME/.rafif-t15-current")"
+BACKUP_PID="$(cat "$HOME/.rafif-t15-pid")"
+
+bash "$PROJECT/scripts/monitoring.sh" --watch-pid "$BACKUP_PID"
+
+MONITOR_STATUS=$?
+echo "Exit status monitoring: $MONITOR_STATUS"
 ```
 
-### Hasil yang diharapkan
+Setelah monitoring selesai, periksa hasil backup pada Terminal 1:
 
-- Script menampilkan PID proses yang diminta.
-- Informasi CPU, persentase memori, dan RSS tampil pada terminal.
-- Satu atau lebih baris `TYPE=PROCESS` untuk PID tersebut tersimpan di `logs/monitoring.log`.
-- Monitoring berhenti dengan pesan penyelesaian ketika proses selesai.
+```bash
+wait "$BACKUP_PID"
 
-### Bukti yang disimpan
+BACKUP_STATUS=$?
 
-- Screenshot perintah backup di latar belakang dan PID yang diperoleh.
-- Screenshot keluaran `--watch-pid`.
-- Screenshot baris log dengan PID, CPU, MEMORY, dan RSS_KB.
+cat "$T15_DIR/backup-output.txt"
 
-### Catatan pengukuran
+echo "Exit status backup: $BACKUP_STATUS"
+```
 
-`%CPU` dari `ps` adalah rata-rata selama proses berjalan, sehingga nilai kecil atau `0.0%` dapat muncul pada proses yang singkat atau tidak banyak menggunakan CPU. Jika ingin melihat proses anak yang melakukan kompresi, seperti `tar` atau `gzip`, ambil PID proses anak tersebut dan jalankan mode `--watch-pid` pada PID itu.
+### Hasil aktual
 
-## 3. T16 - Monitoring menggunakan PID yang tidak valid
+- PID yang dipantau: `33293`.
+- Nama proses yang teramati: `bash`.
+- Monitoring berhasil mengambil 18 sampel.
+- Penggunaan CPU teramati sekitar 0,0–0,1%.
+- Penggunaan memori teramati sebesar 0,1%.
+- Memori RSS teramati sekitar 4320–4356 KB.
+- Data pemantauan tersimpan pada `logs/monitoring.log`.
+- Monitoring berhenti otomatis ketika proses selesai.
+- Backup berhasil diselesaikan dengan exit status 0.
+- Monitoring berhasil diselesaikan dengan exit status 0.
+
+Status: LULUS.
+
+### Bukti Pengujian
+
+- `evidence/07-ubuntu-server-demo/06-monitoring/T15-monitoring-backup-aktif-dua-terminal.png`
+- `evidence/07-ubuntu-server-demo/06-monitoring/T15-monitoring-backup-aktif.txt`
+
+### Catatan Pengukuran
+
+Nilai `%CPU` yang ditampilkan oleh `ps` merupakan rata-rata penggunaan CPU selama proses berjalan. Oleh karena itu, nilai rendah dapat muncul pada proses backup yang sebagian waktunya menunggu atau menggunakan sumber daya CPU secara singkat.
+
+Pengujian ini mengamati PID proses backup yang dijalankan melalui Bash. Nilai CPU dan memori dicatat sesuai hasil aktual monitoring, bukan diasumsikan selalu tinggi.
+
+## 3. T16 - Monitoring Menggunakan PID yang Tidak Valid
 
 ### Tujuan
 
 Memastikan PID yang tidak ditemukan ditangani dengan pesan yang jelas dan tidak menghasilkan metrik CPU atau memori palsu.
 
-### Langkah pengujian
+### Langkah Pengujian
+```bash
+cd ~/automation-backup-and-recovery-data
 
-Tentukan PID numerik yang tidak digunakan:
+source tests/demo/demo-env.sh
+```
+Muat konfigurasi lingkungan demonstrasi agar variabel PROJECT tersedia sebelum menjalankan modul monitoring.
+
+Tentukan PID numerik yang tidak aktif:
 
 ```bash
 INVALID_PID=99999999
+
 while [[ -e "/proc/$INVALID_PID" ]]; do
     INVALID_PID=$((INVALID_PID + 1))
 done
+
+echo "PID pengujian: $INVALID_PID"
 ```
 
-Jalankan monitoring dan periksa exit status:
+Jalankan monitoring:
 
 ```bash
-bash scripts/monitoring.sh --pid "$INVALID_PID"
-printf 'Exit status: %s\n' "$?"
+bash "$PROJECT/scripts/monitoring.sh" --pid "$INVALID_PID"
+
+echo "Exit status: $?"
 ```
 
-### Hasil yang diharapkan
-
-- Muncul pesan bahwa PID tidak ditemukan, sudah berhenti, atau tidak dapat diamati.
-- Exit status bernilai `1`.
-- Log dapat mencatat penolakan dengan `STATUS=REJECTED`.
-- Baris penolakan tidak berisi nilai `CPU`, `MEMORY`, atau `RSS_KB`.
-
-Uji format PID yang salah secara terpisah:
+Periksa pencatatan penolakan pada log:
 
 ```bash
-bash scripts/monitoring.sh --pid abc
-printf 'Exit status: %s\n' "$?"
+grep -F "$INVALID_PID" "$PROJECT/logs/monitoring.log" | tail -n 5
 ```
 
-Hasil yang diharapkan adalah pesan format PID tidak valid dan exit status `2`.
+### Hasil Aktual
 
-### Bukti yang disimpan
+- PID pengujian: `99999999`.
+- Sistem menampilkan pesan bahwa proses tidak ditemukan, sudah berhenti, atau tidak dapat diamati.
+- Monitoring menghasilkan exit status 1.
+- Log mencatat penolakan dengan `STATUS=REJECTED`.
+- Alasan penolakan tercatat sebagai `PID_NOT_ACTIVE_OR_NOT_VISIBLE`.
+- Baris penolakan tidak menghasilkan nilai CPU, MEMORY, atau RSS_KB palsu.
 
-- Screenshot perintah dengan PID yang tidak ditemukan.
-- Screenshot pesan penolakan dan exit status `1`.
-- Screenshot baris `STATUS=REJECTED` di log.
+Status: LULUS.
 
-## 4. Pengujian otomatis lokal
+### Bukti Pengujian
 
-Dari akar proyek, jalankan:
+- `evidence/07-ubuntu-server-demo/06-monitoring/T16-pid-tidak-valid-ditolak.png`
+- `evidence/07-ubuntu-server-demo/06-monitoring/T16-monitoring-pid-invalid.txt`
+- `evidence/07-ubuntu-server-demo/06-monitoring/T16-log-rejected-tanpa-metrik.png`
+
+## 4. Pengujian Otomatis Lokal
+
+Dari akar repository, jalankan:
 
 ```bash
 bash -n scripts/monitoring.sh
@@ -116,13 +174,40 @@ bash -n tests/test-monitoring-rafif.sh
 bash tests/test-monitoring-rafif.sh
 ```
 
-Pengujian otomatis memakai salinan sementara agar tidak mengubah log atau output proyek. Hasil lokal harus dibedakan dari bukti pengujian yang diambil langsung dari VM Ubuntu kelompok.
+Pengujian otomatis menggunakan salinan sementara agar tidak mengubah log atau output proyek. Hasil lokal dibedakan dari bukti pengujian yang diambil langsung dari VM Ubuntu Server kelompok.
 
-## 5. Tabel hasil aktual
+## 5. Tabel Hasil Aktual
 
-Isi tabel ini berdasarkan pengujian yang benar-benar dilakukan pada VM Ubuntu kelompok.
+| ID | Hasil Aktual | Exit Status | Status |
+|---|---|---|---|
+| T15 | Monitoring PID 33293 berhasil mencatat 18 sampel. Backup berhasil diselesaikan. | Backup 0, monitoring 0 | LULUS |
+| T16 | PID 99999999 ditolak dan dicatat sebagai STATUS=REJECTED tanpa metrik palsu. | 1 | LULUS |
 
-| ID | Hasil aktual | Exit status | Bukti | Status |
-|---|---|---:|---|---|
-| T15 | Isi setelah pengujian VM | Isi setelah pengujian | Nama screenshot/log | Belum diuji di VM |
-| T16 | Isi setelah pengujian VM | Isi setelah pengujian | Nama screenshot/log | Belum diuji di VM |
+## 6. Pembersihan Data Pengujian
+
+Setelah T15 selesai, direktori sementara dapat dibersihkan menggunakan pemeriksaan path berikut:
+
+```bash
+T15_DIR="$(cat "$HOME/.rafif-t15-current")"
+
+case "$T15_DIR" in
+    "$HOME"/rafif-t15.*)
+        rm -rf -- "$T15_DIR"
+        echo "Direktori pengujian berhasil dibersihkan."
+        ;;
+    *)
+        echo "Path tidak sesuai. Penghapusan dibatalkan."
+        exit 1
+        ;;
+esac
+
+rm -f "$HOME/.rafif-t15-current" "$HOME/.rafif-t15-pid"
+```
+
+Pembersihan hanya dilakukan terhadap direktori sementara khusus pengujian T15.
+
+## 7. Kesimpulan
+
+Modul `monitoring.sh` berhasil mengamati proses backup yang sedang berjalan dan mencatat informasi penggunaan CPU, memori, serta RSS. Pengujian PID tidak valid juga menunjukkan bahwa sistem dapat menolak proses yang tidak dapat diamati dan mencatat status penolakan tanpa menghasilkan metrik palsu.
+
+Pengujian T15 dan T16 telah dilaksanakan langsung pada VM Ubuntu Server kelompok dan didokumentasikan melalui screenshot serta hasil terminal pada repository.

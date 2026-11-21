@@ -1,102 +1,90 @@
 # Lembar Pengujian Anggota 5 - T10 sampai T12
 
-## Informasi pengujian
+## Informasi Pengujian
 
-- Penanggung jawab: Izzul
+- Penanggung jawab: Muhammad Nur Ihsani Izzul Haq Rosyid (2510512178)
 - Lingkungan pengujian: VM Ubuntu Server kelompok
 - Script utama: `scripts/backup.sh`
 - File lock: `output/backup_5a.lock`
 - File log: `output/backup.log`
 - File laporan: `output/laporan.txt`
+- Tanggal pengujian: 19–20 November 2026
 
-Tanggal pengujian: ____________________
-Versi/commit yang diuji: ____________________
-Penguji: ____________________
-
-## T10 - Pengujian lock dua proses backup
+## T10 - Pengujian Lock Dua Proses Backup
 
 Tujuan: memastikan proses backup kedua ditolak selama proses backup pertama masih memegang lock.
 
-Prasyarat: direktori sumber dan tujuan valid, `flock` tersedia, dan tidak ada proses backup lain yang sedang berjalan.
+| Item | Proses pertama (positif) | Proses kedua (negatif) |
+|---|---|---|
+| Tujuan | Memastikan backup berhasil memperoleh lock. | Memastikan proses backup kedua ditolak saat lock aktif. |
+| Prasyarat | Direktori sumber dan tujuan valid serta `flock` tersedia. | Proses backup pertama masih memegang lock. |
+| Hasil aktual | Lock berhasil diperoleh. Backup selesai dan arsip berhasil dibuat. | Eksekusi ditolak dengan pesan `Eksekusi ditolak: proses backup lain masih berjalan.` |
+| PID | 5717 | 5766 |
+| Exit status | 0 | 1 |
+| Status | LULUS | LULUS |
 
-Jalankan proses backup pertama pada terminal 1:
+Bukti:
+- `evidence/07-ubuntu-server-demo/06-lock-log-report/T10-dua-terminal-lock.png`
+- `evidence/07-ubuntu-server-demo/06-lock-log-report/T10-terminal-1-backup-berhasil.png`
+- `evidence/07-ubuntu-server-demo/06-lock-log-report/T10-proses-pertama.txt`
+- `evidence/07-ubuntu-server-demo/06-lock-log-report/T10-proses-kedua.txt`
 
-```bash
-bash scripts/backup.sh /path/ke/sumber /path/ke/tujuan
-```
+## T11 - Pengujian Pencatatan Log
 
-Saat proses pertama masih berlangsung, jalankan perintah backup kedua pada terminal 2 dengan parameter yang sama:
+Tujuan: memastikan aktivitas backup dan penolakan proses akibat lock tercatat pada file log.
 
-```bash
-bash scripts/backup.sh /path/ke/sumber /path/ke/tujuan
-STATUS=$?
-printf 'Exit status proses kedua: %s\n' "$STATUS"
-```
+Pemeriksaan dilakukan terhadap `output/backup.log`.
 
-Hasil yang diharapkan: proses kedua menampilkan pesan `Eksekusi ditolak: proses backup lain masih berjalan.` dan menghasilkan exit status bukan nol. Proses pertama tetap melanjutkan backup dan berakhir sesuai hasil prosesnya.
+Hasil aktual:
+- File log ditemukan dan tidak kosong.
+- Ukuran file: 6196 bytes.
+- Permission: 600.
+- Aktivitas memperoleh lock oleh PID 5717 tercatat.
+- Penolakan proses kedua oleh PID 5766 tercatat.
+- Keberhasilan backup pertama tercatat.
+- Setiap catatan aktivitas memuat waktu, PID, tingkat pesan, dan keterangan.
 
-Hasil aktual: ______________________________________________
+Status: LULUS.
 
-Exit status proses pertama: __________
-Exit status proses kedua: __________
+Bukti:
+- `evidence/07-ubuntu-server-demo/06-lock-log-report/T11-pemeriksaan-log-backup.png`
+- `evidence/07-ubuntu-server-demo/06-lock-log-report/T11-pemeriksaan-log-backup.txt`
 
-Status: LULUS / GAGAL
+## T12 - Pengujian Laporan Backup
 
-Bukti: `evidence/05-lock-log-report/T10-lock-dua-proses.png`
+Tujuan: memastikan laporan backup memuat informasi arsip dan checksum yang sesuai dengan hasil pembuatan arsip.
 
-## T11 - Pengujian pencatatan log
+Hasil aktual:
+- Laporan `output/laporan.txt` berhasil dibuat.
+- Nama arsip: `backup_20261120_142557_33922.tar.gz`.
+- Waktu eksekusi: 20 November 2026, 14:25:57.
+- PID: 33922.
+- Status proses: BERHASIL.
+- Hasil verifikasi: LOLOS.
+- Checksum SHA-256 pada laporan cocok dengan checksum aktual arsip.
+- Checksum: `6d4716093a6f959f6a2d7b044ec83919d8d55f7a21d00c54ed3c7ae95558a830`.
+- Exit status backup: 0.
 
-Setelah proses backup selesai atau ditolak, periksa log:
+Status: LULUS.
 
-```bash
-cat output/backup.log
-```
+Bukti:
+- `evidence/07-ubuntu-server-demo/06-lock-log-report/T12-laporan-dan-checksum-valid.png`
+- `evidence/07-ubuntu-server-demo/06-lock-log-report/T12-refresh-laporan.txt`
 
-Pastikan log memuat baris yang menunjukkan lock berhasil diperoleh, proses kedua ditolak karena lock aktif, serta hasil backup pertama. Setiap baris harus memuat waktu, PID, tingkat pesan, dan keterangan aktivitas.
+## Pemeriksaan Izin File Log
 
-Hasil aktual: ______________________________________________
+Pemeriksaan dilakukan terhadap file log backup untuk memastikan hak aksesnya dibatasi kepada pemilik file.
 
-Status: LULUS / GAGAL
+Hasil pemeriksaan:
 
-Bukti: `evidence/05-lock-log-report/T11-log-backup.png`
+- File: `output/backup.log`
+- Permission: `600`
+- Ukuran: `6196 bytes`
 
-## T12 - Pengujian laporan backup
+Status: LULUS.
 
-Periksa laporan:
-
-```bash
-cat output/laporan.txt
-```
-
-Ambil path arsip yang tertulis pada kolom `Nama Arsip`, kemudian cocokkan checksum:
-
-```bash
-sha256sum "/path/arsip/dari/laporan.tar.gz"
-```
-
-Hasil yang diharapkan: laporan memuat nama arsip, waktu eksekusi, checksum SHA-256, hasil verifikasi `LOLOS`, serta status proses dan PID. Nilai checksum harus sama dengan hasil `sha256sum` pada arsip yang tercantum.
-
-Hasil aktual: ______________________________________________
-
-Checksum pada laporan: ____________________________________
-Checksum hasil pemeriksaan: ________________________________
-
-Status: LULUS / GAGAL
-
-Bukti: `evidence/05-lock-log-report/T12-laporan-dan-checksum.png`
-
-## Pemeriksaan izin file
-
-Jalankan:
-
-```bash
-stat -c '%a %n' output/backup_5a.lock output/backup.log output/laporan.txt
-```
-
-Hasil yang diharapkan: setiap file operasional memiliki izin `600`.
-
-Hasil aktual: ______________________________________________
+Bukti pemeriksaan: `evidence/07-ubuntu-server-demo/06-lock-log-report/T11-pemeriksaan-log-backup.txt`
 
 ## Catatan
 
-Isi hasil aktual, exit status, tanggal, dan versi commit berdasarkan pelaksanaan pada VM Ubuntu kelompok. Jangan mengisi status LULUS hanya berdasarkan hasil pengujian di komputer atau lingkungan lain.
+Pengujian T10–T12 dilaksanakan langsung pada VM Ubuntu Server kelompok. Hasil aktual, PID, exit status, log, laporan, dan screenshot mengacu pada bukti pelaksanaan yang tersimpan di repository.

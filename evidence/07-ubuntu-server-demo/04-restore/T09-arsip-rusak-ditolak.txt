@@ -1,0 +1,10 @@
+$ bash /home/afaf/automation-backup-and-recovery-data/scripts/restore.sh /home/afaf/automation-backup-and-recovery-data/tests/demo/T09-arsip-rusak-20261120_130128.tar.gz /home/afaf/automation-backup-and-recovery-data/tests/demo/restore-evidence-bad-20261120_130128
+[1/4] Memverifikasi checksum arsip...
+Memverifikasi integritas arsip: /home/afaf/automation-backup-and-recovery-data/tests/demo/T09-arsip-rusak-20261120_130128.tar.gz
+Checksum Acuan  : 6d4716093a6f959f6a2d7b044ec83919d8d55f7a21d00c54ed3c7ae95558a830
+Checksum Aktual : 5c55d40373373d7c28ce225841ea7ca329dd2613b3cec2216348ad0275866906
+==========================================
+VERIFIKASI GAGAL! Checksum tidak cocok (arsip berubah/rusak).
+==========================================
+ERROR: Arsip ditolak karena verifikasi checksum gagal.
+Exit status: 1

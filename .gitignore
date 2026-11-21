@@ -20,3 +20,4 @@ config/backup.conf
 # Berkas sistem operasi
 .DS_Store
 Thumbs.db
+tests/demo/lock/source/data-lock.bin

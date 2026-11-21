@@ -1,0 +1,32 @@
+$ bash /home/afaf/automation-backup-and-recovery-data/scripts/backup.sh /var/tmp/uji-akses-t17-t18.16SJ1R/data /var/tmp/uji-akses-t17-t18.16SJ1R/arsip
+[2026-11-20 14:17:16] [PID:33618] [INFO] Lock berhasil diperoleh. Memulai rangkaian backup.
+Validasi berhasil.
+Sumber: /var/tmp/uji-akses-t17-t18.16SJ1R/data
+Tujuan: /var/tmp/uji-akses-t17-t18.16SJ1R/arsip
+[2026-11-20 14:17:16] [PID:33618] [INFO] Validasi sumber dan tujuan berhasil.
+[2026-11-20 14:17:16] [PID:33618] [INFO] Path sumber dan tujuan berhasil diresolusikan. Sumber: /var/tmp/uji-akses-t17-t18.16SJ1R/data | Tujuan: /var/tmp/uji-akses-t17-t18.16SJ1R/arsip
+[2026-11-20 14:17:16] [PID:33618] [INFO] Proses pembuatan arsip dimulai. Sumber: /var/tmp/uji-akses-t17-t18.16SJ1R/data | Tujuan: /var/tmp/uji-akses-t17-t18.16SJ1R/arsip
+Memulai proses backup...
+Sumber  : /var/tmp/uji-akses-t17-t18.16SJ1R/data
+Tujuan  : /var/tmp/uji-akses-t17-t18.16SJ1R/arsip
+Membuat checksum SHA-256 untuk: /var/tmp/uji-akses-t17-t18.16SJ1R/arsip/backup_20261120_141716_33618.tar.gz
+==========================================
+CHECKSUM BERHASIL DIBUAT!
+File Checksum : /var/tmp/uji-akses-t17-t18.16SJ1R/arsip/backup_20261120_141716_33618.tar.gz.sha256
+SHA-256       : e9cdc3f650bf3750b6b496818d6c37999b5cbebb488a34ebc75b9c1dc9786eff
+==========================================
+[2026-11-20 14:17:16] [PID:33618] [INFO] Checksum SHA-256 berhasil dibuat untuk /var/tmp/uji-akses-t17-t18.16SJ1R/arsip/backup_20261120_141716_33618.tar.gz
+Memverifikasi integritas arsip: /var/tmp/uji-akses-t17-t18.16SJ1R/arsip/backup_20261120_141716_33618.tar.gz
+Checksum Acuan  : e9cdc3f650bf3750b6b496818d6c37999b5cbebb488a34ebc75b9c1dc9786eff
+Checksum Aktual : e9cdc3f650bf3750b6b496818d6c37999b5cbebb488a34ebc75b9c1dc9786eff
+==========================================
+VERIFIKASI BERHASIL! Checksum cocok.
+==========================================
+[2026-11-20 14:17:16] [PID:33618] [INFO] Verifikasi checksum berhasil untuk /var/tmp/uji-akses-t17-t18.16SJ1R/arsip/backup_20261120_141716_33618.tar.gz
+[2026-11-20 14:17:16] [PID:33618] [INFO] Backup berhasil. Arsip: /var/tmp/uji-akses-t17-t18.16SJ1R/arsip/backup_20261120_141716_33618.tar.gz | Laporan: /home/afaf/automation-backup-and-recovery-data/output/laporan.txt
+================================
+ARSIP BERHASIL DIBUAT!
+Arsip: /var/tmp/uji-akses-t17-t18.16SJ1R/arsip/backup_20261120_141716_33618.tar.gz
+Laporan: /home/afaf/automation-backup-and-recovery-data/output/laporan.txt
+================================
+Exit status: 0

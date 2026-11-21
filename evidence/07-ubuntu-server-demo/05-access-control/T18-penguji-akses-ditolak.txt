@@ -1,0 +1,6 @@
+$ sudo -u penguji tar -tzf /var/tmp/uji-akses-t17-t18.16SJ1R/arsip/backup_20261120_141716_33618.tar.gz
+tar (child): /var/tmp/uji-akses-t17-t18.16SJ1R/arsip/backup_20261120_141716_33618.tar.gz: Cannot open: Permission denied
+tar (child): Error is not recoverable: exiting now
+tar: Child returned status 2
+tar: Error is not recoverable: exiting now
+Exit status: 2

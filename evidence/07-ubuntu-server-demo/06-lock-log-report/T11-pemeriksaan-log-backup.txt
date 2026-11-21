@@ -1,0 +1,36 @@
+$ bash -c $'\nLOG="$PROJECT/output/backup.log"\n\nif [ -s "$LOG" ]; then\n    echo "=== INFORMASI FILE LOG ==="\n    stat -c "File: %n | Ukuran: %s bytes | Permission: %a" "$LOG"\n\n    echo\n    echo "=== RIWAYAT AKTIVITAS BACKUP ==="\n    tail -n 30 "$LOG"\nelse\n    echo "ERROR: File log tidak ditemukan atau kosong."\n    exit 1\nfi\n'
+=== INFORMASI FILE LOG ===
+File: /home/afaf/automation-backup-and-recovery-data/output/backup.log | Ukuran: 6196 bytes | Permission: 600
+
+=== RIWAYAT AKTIVITAS BACKUP ===
+[2026-11-19 04:40:37] [PID:4778] [INFO] Validasi sumber dan tujuan berhasil.
+[2026-11-19 04:40:37] [PID:4778] [INFO] Path sumber dan tujuan berhasil diresolusikan. Sumber: /home/afaf/automation-backup-and-recovery-data/tests/demo/source | Tujuan: /home/afaf/automation-backup-and-recovery-data/output/demo-backup
+[2026-11-19 04:40:37] [PID:4778] [INFO] Proses pembuatan arsip dimulai. Sumber: /home/afaf/automation-backup-and-recovery-data/tests/demo/source | Tujuan: /home/afaf/automation-backup-and-recovery-data/output/demo-backup
+[2026-11-19 04:40:37] [PID:4778] [INFO] Checksum SHA-256 berhasil dibuat untuk /home/afaf/automation-backup-and-recovery-data/output/demo-backup/backup_20261119_044037_4778.tar.gz
+[2026-11-19 04:40:37] [PID:4778] [INFO] Verifikasi checksum berhasil untuk /home/afaf/automation-backup-and-recovery-data/output/demo-backup/backup_20261119_044037_4778.tar.gz
+[2026-11-19 04:40:37] [PID:4778] [INFO] Backup berhasil. Arsip: /home/afaf/automation-backup-and-recovery-data/output/demo-backup/backup_20261119_044037_4778.tar.gz | Laporan: /home/afaf/automation-backup-and-recovery-data/output/laporan.txt
+[2026-11-19 04:45:48] [PID:4923] [INFO] Lock berhasil diperoleh. Memulai rangkaian backup.
+[2026-11-19 04:45:48] [PID:4923] [ERROR] Backup dihentikan karena validasi gagal (exit status: 6).
+[2026-11-19 05:16:36] [PID:5508] [INFO] Lock berhasil diperoleh. Memulai rangkaian backup.
+[2026-11-19 05:16:36] [PID:5508] [INFO] Validasi sumber dan tujuan berhasil.
+[2026-11-19 05:16:36] [PID:5508] [INFO] Path sumber dan tujuan berhasil diresolusikan. Sumber: /home/afaf/automation-backup-and-recovery-data/tests/demo/lock/source | Tujuan: /home/afaf/automation-backup-and-recovery-data/output/demo-lock
+[2026-11-19 05:16:36] [PID:5508] [INFO] Proses pembuatan arsip dimulai. Sumber: /home/afaf/automation-backup-and-recovery-data/tests/demo/lock/source | Tujuan: /home/afaf/automation-backup-and-recovery-data/output/demo-lock
+[2026-11-19 05:16:40] [PID:5508] [INFO] Checksum SHA-256 berhasil dibuat untuk /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051636_5508.tar.gz
+[2026-11-19 05:16:40] [PID:5508] [INFO] Verifikasi checksum berhasil untuk /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051636_5508.tar.gz
+[2026-11-19 05:16:40] [PID:5508] [INFO] Backup berhasil. Arsip: /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051636_5508.tar.gz | Laporan: /home/afaf/automation-backup-and-recovery-data/output/laporan.txt
+[2026-11-19 05:17:05] [PID:5615] [INFO] Lock berhasil diperoleh. Memulai rangkaian backup.
+[2026-11-19 05:17:05] [PID:5615] [INFO] Validasi sumber dan tujuan berhasil.
+[2026-11-19 05:17:05] [PID:5615] [INFO] Path sumber dan tujuan berhasil diresolusikan. Sumber: /home/afaf/automation-backup-and-recovery-data/tests/demo/lock/source | Tujuan: /home/afaf/automation-backup-and-recovery-data/output/demo-lock
+[2026-11-19 05:17:05] [PID:5615] [INFO] Proses pembuatan arsip dimulai. Sumber: /home/afaf/automation-backup-and-recovery-data/tests/demo/lock/source | Tujuan: /home/afaf/automation-backup-and-recovery-data/output/demo-lock
+[2026-11-19 05:17:10] [PID:5615] [INFO] Checksum SHA-256 berhasil dibuat untuk /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051705_5615.tar.gz
+[2026-11-19 05:17:10] [PID:5615] [INFO] Verifikasi checksum berhasil untuk /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051705_5615.tar.gz
+[2026-11-19 05:17:10] [PID:5615] [INFO] Backup berhasil. Arsip: /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051705_5615.tar.gz | Laporan: /home/afaf/automation-backup-and-recovery-data/output/laporan.txt
+[2026-11-19 05:18:01] [PID:5717] [INFO] Lock berhasil diperoleh. Memulai rangkaian backup.
+[2026-11-19 05:18:01] [PID:5717] [INFO] Validasi sumber dan tujuan berhasil.
+[2026-11-19 05:18:01] [PID:5717] [INFO] Path sumber dan tujuan berhasil diresolusikan. Sumber: /home/afaf/automation-backup-and-recovery-data/tests/demo/lock/source | Tujuan: /home/afaf/automation-backup-and-recovery-data/output/demo-lock
+[2026-11-19 05:18:01] [PID:5717] [INFO] Proses pembuatan arsip dimulai. Sumber: /home/afaf/automation-backup-and-recovery-data/tests/demo/lock/source | Tujuan: /home/afaf/automation-backup-and-recovery-data/output/demo-lock
+[2026-11-19 05:18:02] [PID:5766] [ERROR] Eksekusi ditolak: proses backup lain masih berjalan.
+[2026-11-19 05:18:05] [PID:5717] [INFO] Checksum SHA-256 berhasil dibuat untuk /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051801_5717.tar.gz
+[2026-11-19 05:18:05] [PID:5717] [INFO] Verifikasi checksum berhasil untuk /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051801_5717.tar.gz
+[2026-11-19 05:18:06] [PID:5717] [INFO] Backup berhasil. Arsip: /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051801_5717.tar.gz | Laporan: /home/afaf/automation-backup-and-recovery-data/output/laporan.txt
+Exit status: 0

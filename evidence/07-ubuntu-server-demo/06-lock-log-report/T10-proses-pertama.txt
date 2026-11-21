@@ -1,0 +1,32 @@
+$ bash /home/afaf/automation-backup-and-recovery-data/scripts/backup.sh /home/afaf/automation-backup-and-recovery-data/tests/demo/lock/source /home/afaf/automation-backup-and-recovery-data/output/demo-lock
+[2026-11-19 05:18:01] [PID:5717] [INFO] Lock berhasil diperoleh. Memulai rangkaian backup.
+Validasi berhasil.
+Sumber: /home/afaf/automation-backup-and-recovery-data/tests/demo/lock/source
+Tujuan: /home/afaf/automation-backup-and-recovery-data/output/demo-lock
+[2026-11-19 05:18:01] [PID:5717] [INFO] Validasi sumber dan tujuan berhasil.
+[2026-11-19 05:18:01] [PID:5717] [INFO] Path sumber dan tujuan berhasil diresolusikan. Sumber: /home/afaf/automation-backup-and-recovery-data/tests/demo/lock/source | Tujuan: /home/afaf/automation-backup-and-recovery-data/output/demo-lock
+[2026-11-19 05:18:01] [PID:5717] [INFO] Proses pembuatan arsip dimulai. Sumber: /home/afaf/automation-backup-and-recovery-data/tests/demo/lock/source | Tujuan: /home/afaf/automation-backup-and-recovery-data/output/demo-lock
+Memulai proses backup...
+Sumber  : /home/afaf/automation-backup-and-recovery-data/tests/demo/lock/source
+Tujuan  : /home/afaf/automation-backup-and-recovery-data/output/demo-lock
+Membuat checksum SHA-256 untuk: /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051801_5717.tar.gz
+==========================================
+CHECKSUM BERHASIL DIBUAT!
+File Checksum : /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051801_5717.tar.gz.sha256
+SHA-256       : 4c927d7cc37dc0b1149c772c1ae2f72241aafa5d9e5a676dedb4c97c0b855b78
+==========================================
+[2026-11-19 05:18:05] [PID:5717] [INFO] Checksum SHA-256 berhasil dibuat untuk /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051801_5717.tar.gz
+Memverifikasi integritas arsip: /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051801_5717.tar.gz
+Checksum Acuan  : 4c927d7cc37dc0b1149c772c1ae2f72241aafa5d9e5a676dedb4c97c0b855b78
+Checksum Aktual : 4c927d7cc37dc0b1149c772c1ae2f72241aafa5d9e5a676dedb4c97c0b855b78
+==========================================
+VERIFIKASI BERHASIL! Checksum cocok.
+==========================================
+[2026-11-19 05:18:05] [PID:5717] [INFO] Verifikasi checksum berhasil untuk /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051801_5717.tar.gz
+[2026-11-19 05:18:06] [PID:5717] [INFO] Backup berhasil. Arsip: /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051801_5717.tar.gz | Laporan: /home/afaf/automation-backup-and-recovery-data/output/laporan.txt
+================================
+ARSIP BERHASIL DIBUAT!
+Arsip: /home/afaf/automation-backup-and-recovery-data/output/demo-lock/backup_20261119_051801_5717.tar.gz
+Laporan: /home/afaf/automation-backup-and-recovery-data/output/laporan.txt
+================================
+Exit status: 0

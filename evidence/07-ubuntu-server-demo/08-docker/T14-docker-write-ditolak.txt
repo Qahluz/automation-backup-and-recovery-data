@@ -1,0 +1,5 @@
+$ bash -c $'\nREPORT="$PROJECT/output/laporan.txt"\nTARGET="$PROJECT/output/T14-write-test.txt"\n\nBEFORE="$(sha256sum "$REPORT")"\n\nset +e\nsudo docker run --rm \\\n  --mount "type=bind,src=$PROJECT/output,dst=/data,readonly" \\\n  alpine:3.21 sh -c "echo UJI-READ-ONLY > /data/T14-write-test.txt"\n\nDOCKER_STATUS=$?\nset -e\n\necho "Exit status Docker: $DOCKER_STATUS"\n\nif [ "$DOCKER_STATUS" -eq 0 ]; then\n    echo "GAGAL: Container berhasil menulis."\n    exit 1\nfi\n\nif [ -e "$TARGET" ]; then\n    echo "GAGAL: File berhasil dibuat di host."\n    exit 1\nfi\n\nAFTER="$(sha256sum "$REPORT")"\n\nif [ "$BEFORE" != "$AFTER" ]; then\n    echo "GAGAL: Laporan host berubah."\n    exit 1\nfi\n\necho "LULUS: Penulisan ditolak dan laporan host tidak berubah."\n'
+sh: can't create /data/T14-write-test.txt: Read-only file system
+Exit status Docker: 1
+LULUS: Penulisan ditolak dan laporan host tidak berubah.
+Exit status: 0

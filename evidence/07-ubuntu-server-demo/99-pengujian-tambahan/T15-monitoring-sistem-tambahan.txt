@@ -1,0 +1,25 @@
+$ bash /home/afaf/automation-backup-and-recovery-data/scripts/monitoring.sh
+
+==========================================
+       PEMANTAUAN SISTEM CADANGAN
+==========================================
+Waktu             : 2026-11-19 05:31:50
+Penggunaan CPU    : 2.50%
+Penggunaan Memori : 16.48%
+------------------------------------------
+Status CPU        : NORMAL
+Status Memori     : NORMAL
+------------------------------------------
+PROSES BACKUP:
+Tidak ditemukan proses backup yang aktif.
+------------------------------------------
+5 PROSES DENGAN PENGGUNAAN CPU TERTINGGI:
+    PID COMMAND         %CPU %MEM
+   2314 dockerd          0.6  2.5
+     11 kworker/0:1-mm_  0.3  0.0
+   1032 snapd            0.2  1.2
+   2072 containerd       0.0  1.4
+   5422 sshd-session     0.0  0.2
+==========================================
+Data pemantauan disimpan di: /home/afaf/automation-backup-and-recovery-data/logs/monitoring.log
+Exit status: 0

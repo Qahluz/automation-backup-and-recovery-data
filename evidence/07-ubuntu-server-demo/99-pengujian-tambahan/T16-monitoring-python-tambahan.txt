@@ -1,0 +1,57 @@
+$ bash /home/afaf/automation-backup-and-recovery-data/scripts/monitoring.sh --watch-pid 31963
+Memulai pemantauan PID 31963. Interval: 1 detik.
+Monitoring berhenti otomatis ketika proses selesai.
+
+==========================================
+       PEMANTAUAN PROSES BACKUP
+==========================================
+Waktu          : 2026-11-20 12:36:56
+PID            : 31963
+Nama proses    : python3
+Status proses  : R
+Penggunaan CPU : 99.7%
+Penggunaan Memori: 2.1%
+Memori RSS     : 76092 KB
+Data dicatat di: /home/afaf/automation-backup-and-recovery-data/logs/monitoring.log
+==========================================
+
+==========================================
+       PEMANTAUAN PROSES BACKUP
+==========================================
+Waktu          : 2026-11-20 12:36:57
+PID            : 31963
+Nama proses    : python3
+Status proses  : R
+Penggunaan CPU : 99.8%
+Penggunaan Memori: 2.1%
+Memori RSS     : 76092 KB
+Data dicatat di: /home/afaf/automation-backup-and-recovery-data/logs/monitoring.log
+==========================================
+
+==========================================
+       PEMANTAUAN PROSES BACKUP
+==========================================
+Waktu          : 2026-11-20 12:37:00
+PID            : 31963
+Nama proses    : python3
+Status proses  : R
+Penggunaan CPU : 99.8%
+Penggunaan Memori: 2.1%
+Memori RSS     : 76092 KB
+Data dicatat di: /home/afaf/automation-backup-and-recovery-data/logs/monitoring.log
+==========================================
+
+==========================================
+       PEMANTAUAN PROSES BACKUP
+==========================================
+Waktu          : 2026-11-20 12:37:06
+PID            : 31963
+Nama proses    : python3
+Status proses  : R
+Penggunaan CPU : 99.9%
+Penggunaan Memori: 2.1%
+Memori RSS     : 76092 KB
+Data dicatat di: /home/afaf/automation-backup-and-recovery-data/logs/monitoring.log
+==========================================
+Proses dengan PID 31963 sudah berhenti. Pemantauan selesai (4 sampel).
+Exit status: 0

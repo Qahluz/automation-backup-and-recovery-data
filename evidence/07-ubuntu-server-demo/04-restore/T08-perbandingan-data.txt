@@ -1,0 +1,2 @@
+$ bash -c diff\ -r\ \"\$SOURCE\"\ \"\$RESTORE_VALID/\$\(basename\ \"\$SOURCE\"\)\"
+Exit status: 0

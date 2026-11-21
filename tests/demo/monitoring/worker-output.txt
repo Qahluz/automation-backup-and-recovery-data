@@ -1,0 +1,3 @@
+Worker berjalan.
+Alokasi memori: 64 MiB
+Worker selesai.

@@ -1,16 +1,16 @@
 # Pengujian Anggota 2: Pembuatan Arsip
 
-Penanggung jawab: Muhammad Agung (2510512181). Bukti: `evidence/anggota2-uji-arsip.txt`.
+Penanggung jawab: Muhammad Agung Budi Laksono (2510512181). Bukti: `evidence/07-ubuntu-server-demo/02-backup/`.
 
 | Item | T04 (positif) | T05 (negatif) |
 |---|---|---|
 | Tujuan | Arsip terbentuk dan isinya sesuai | Tujuan tidak dapat ditulis, kegagalan dilaporkan |
-| Prasyarat | Folder sumber berisi a.txt dan b.txt; folder tujuan dapat ditulis | Folder tujuan diberi izin 555 |
-| Langkah | `bash scripts/backup.sh <sumber> <tujuan>` | Sama, dengan tujuan folder izin 555 |
-| Hasil diharapkan | Exit 0, arsip izin 600, isi sama dengan sumber | Exit bukan 0, pesan error, tidak ada arsip |
-| Hasil aktual | Exit 0, izin `-rw-------`, isi sama (diff) | Exit 1, "Folder tujuan tidak dapat ditulis", tidak ada arsip |
+| Prasyarat | Folder sumber berisi a.txt dan b.txt; folder tujuan dapat ditulis | Folder tujuan diberi izin 500 |
+| Langkah | `bash scripts/backup.sh <sumber> <tujuan>` | Sama, dengan tujuan folder izin 500 |
+| Hasil diharapkan | Exit 0, arsip izin 600, isi sama dengan sumber | Exit 6, direktori tujuan tidak dapat ditulis, tidak ada arsip baru |
+| Hasil aktual | Exit 0, izin `-rw-------`, isi sama (diff) | Exit 6, "Direktori tujuan tidak dapat ditulis", tidak ada arsip baru |
 | Status | Lulus | Lulus |
-| Pemulihan | Hapus /tmp/uji | `chmod 755` pada folder tujuan |
+| Pemulihan | Hapus /tmp/uji | `chmod 700` pada folder tujuan |
 
 Catatan: pada T05 kegagalan ditangkap oleh pemeriksaan folder tujuan
 sebelum `tar` dijalankan, sehingga cabang kegagalan `tar` tidak diuji.
@@ -23,11 +23,11 @@ sebelum `tar` dijalankan, sehingga cabang kegagalan `tar` tidak diuji.
 | Prasyarat | Arsip berizin 600 milik agung; akun `penguji` dibuat | Sama |
 | Langkah | `tar -tzf` sebagai agung | `sudo -u penguji tar -tzf` |
 | Hasil diharapkan | Daftar isi tampil, exit 0 | Permission denied, exit bukan nol |
-| Hasil aktual | Daftar isi tampil (data/, a.txt, b.txt), exit 0 | `Cannot open: Permission denied`, exit 2 |
+| Hasil aktual | Daftar isi tampil (data/, data/a.txt, data/b.txt), exit 0 | `Cannot open: Permission denied`, exit 2 |
 | Status | Lulus | Lulus |
-| Pemulihan | `sudo deluser --remove-home penguji` | Sama |
+| Pemulihan | Hapus akun penguji dan agung jika keduanya dibuat khusus untuk pengujian. | Sama |
 
-Bukti: `evidence/anggota2-uji-akses.txt`. Uji ini dikerjakan oleh Agung
+Bukti: `evidence/07-ubuntu-server-demo/05-access-control/`. Uji ini dikerjakan oleh Agung bersama Rafif.
 
 ## Pengujian regresi tambahan: keamanan path backup
 
@@ -52,6 +52,4 @@ Jalankan dengan:
 bash tests/test-backup-path-safety.sh
 ```
 
-Catatan: status di atas merupakan hasil regression test lokal pada salinan
-repository. Pengujian ulang pada VM Ubuntu kelompok tetap perlu dilakukan
-untuk bukti akhir lingkungan proyek.
+Catatan: pengujian regresi keamanan path merupakan pengujian tambahan yang dilaksanakan secara lokal menggunakan salinan sementara repository. Pengujian utama T04–T05 serta T17–T18 telah dilaksanakan pada VM Ubuntu Server kelompok dan didokumentasikan pada direktori evidence.
