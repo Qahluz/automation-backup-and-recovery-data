@@ -13,8 +13,8 @@
 - **Commit Acuan Repository Utama:** (https://github.com/AfwanNasuha/automation-backup-and-recovery-data/tree/main)
 - **Anggota Kelompok:**
   1. Muhammad Afwan Imam Nasuha — Validasi sumber dan parameter
-  2. Muhammad Afaf Kafabillah — Pembuatan arsip
-  3. Muhammad Agung Budi Laksono — Verifikasi integritas checksum
+  2. Muhammad Agung Budi Laksono — Pembuatan arsip
+  3. Muhammad Afaf Kafabillah — Verifikasi integritas checksum
   4. Panggi Hidayah — Pemulihan data (restore)
   5. Muhammad Nur Ihsani Izzul Haq Rosyid — Lock, log, laporan, dan Docker
   6. Muhammad Raffif Husein Salam — Pengelolaan data uji serta monitoring CPU, memori, dan proses
